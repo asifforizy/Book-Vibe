@@ -4,6 +4,8 @@ import { RouterProvider } from "react-router/dom";
 import Root from '../Pages/Root/Root';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home';
+import About from '../Pages/About/About';
+import BookDetails from '../Pages/Bookdetails/BookDetails';
 
 export  const router = createBrowserRouter([
   {
@@ -13,9 +15,18 @@ export  const router = createBrowserRouter([
     children: [
         {
             index: true,
-            loader:()=> fetch('bookData.json'),
+            loader:()=> fetch('/bookData.json'),
             path: "/",
             Component: Home,
+        },
+        {
+            path:'/about',
+            Component: About,
+        },
+        {
+            path:'/bookDetails/:id',
+            loader:()=> fetch('/bookData.json'),
+            Component:BookDetails,
         }
     ]
   },
