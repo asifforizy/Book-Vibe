@@ -1,20 +1,20 @@
 import React from 'react';
 import { useLoaderData, useParams } from 'react-router';
+import { addToStoredDB } from '../../Utilities/addToDB';
 
 const BookDetails = () => {
     const { id } = useParams();
     const data = useLoaderData() || [];
     const bookID = parseInt(id);
     const singleBook = data.find(book => book.bookId === bookID);
+const handleMarkAsRead = () => {
 
-    if (!singleBook) {
-        return <p className="text-center my-20">Book not found</p>;
-    }
+    addToStoredDB(id);
+}
 
     return (
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 max-w-[1200px] mx-auto my-20 px-4">
 
-            {/* Book Image */}
             <div className="flex-shrink-0 w-full lg:w-1/3">
                 <img
                     src={singleBook.image}
@@ -23,7 +23,6 @@ const BookDetails = () => {
                 />
             </div>
 
-            {/* Book Info */}
             <div className="w-full lg:w-2/3">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">{singleBook.bookName}</h1>
                 <p className="text-lg sm:text-xl mb-3">By: {singleBook.author}</p>
@@ -41,7 +40,7 @@ const BookDetails = () => {
                 <p className="my-2"><span className="font-semibold">Rating:</span> {singleBook.rating} ⭐</p>
 
                 <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">
+                    <button onClick={()=>handleMarkAsRead(id)} className="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">
                         Mark as Read
                     </button>
                     <button className="bg-green-500 text-white px-4 py-2 rounded w-full sm:w-auto">
